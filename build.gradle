@@ -1,0 +1,40 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+
+allprojects {
+    repositories {
+        google()
+        jcenter()
+
+    }
+
+    buildscript {
+        repositories {
+            jcenter()
+            google()
+        }
+        dependencies {
+            classpath 'com.android.tools.build:gradle:3.5.2'
+
+            // NOTE: Do not place your application dependencies here; they belong
+            // in the individual module build.gradle files
+        }
+    }
+
+    apply plugin: 'maven'
+
+    group = 'org.btcdk'
+    version = '0.1.0'
+
+    uploadArchives {
+        repositories {
+            mavenDeployer {
+                //repository(url: "file://[your local maven path here]")
+                repository(url: mavenLocal().getUrl())
+            }
+        }
+    }
+}
+
+//task clean(type: Delete) {
+//    delete rootProject.buildDir
+//}
