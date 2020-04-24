@@ -31,4 +31,36 @@ public class Config {
         this.bitcoinConnections = bitcoinConnections;
         this.bitcoinDiscovery = bitcoinDiscovery;
     }
+
+    public Network getNetwork() {
+        return network;
+    }
+
+    public void setNetwork(Network network) {
+        this.network = network;
+    }
+
+    public String[] getBitcoinPeers() {
+        return bitcoinPeers;
+    }
+
+    public void setBitcoinPeers(String[] bitcoinPeers) {
+        this.bitcoinPeers = bitcoinPeers;
+    }
+
+    public int getBitcoinConnections() {
+        return bitcoinConnections;
+    }
+
+    public void setBitcoinConnections(int bitcoinConnections) {
+        this.bitcoinConnections = bitcoinConnections;
+    }
+
+    public boolean isBitcoinDiscovery() {
+        return bitcoinDiscovery;
+    }
+
+    public void setBitcoinDiscovery(boolean bitcoinDiscovery) {
+        this.bitcoinDiscovery = bitcoinDiscovery;
+    }
 }

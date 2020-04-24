@@ -1,5 +1,6 @@
 package org.btcdk.jni;
 
+import org.junit.After;
 import org.junit.Test;
 
 import java.nio.file.Path;
@@ -8,6 +9,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
+import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
@@ -43,9 +45,14 @@ public class BtcDkServiceTest {
         Optional<InitResult> inited = btcDkService.initConfig(workDir, Network.Regtest, PASSPHRASE, PD_PASSPHRASE_1);
         assertNotNull(inited);
         assertTrue(inited.isPresent());
+        InitResult initResult = inited.get();
+        assertEquals(initResult.getMnemonicWords().length, 12);
+        assertNotNull(initResult.getDepositAddress());
         Optional<Config> loaded = btcDkService.loadConfig(workDir, Network.Regtest);
         assertNotNull(loaded);
         assertTrue(loaded.isPresent());
+        Config config = loaded.get();
+        assertEquals(config.getNetwork(), Network.Regtest);
         Optional<Config> removed = btcDkService.removeConfig(workDir, Network.Regtest);
         assertNotNull(removed);
         assertTrue(removed.isPresent());
