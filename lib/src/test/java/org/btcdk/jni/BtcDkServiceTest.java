@@ -15,7 +15,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 /**
- * AccountService local unit test, which will execute on the development machine (host).
+ * BtcDkService local unit test, which will execute on the development machine (host).
  *
  * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
  * <p>
@@ -53,6 +53,31 @@ public class BtcDkServiceTest {
         assertTrue(loaded.isPresent());
         Config config = loaded.get();
         assertEquals(config.getNetwork(), Network.Regtest);
+        Optional<Config> removed = btcDkService.removeConfig(workDir, Network.Regtest);
+        assertNotNull(removed);
+        assertTrue(removed.isPresent());
+    }
+
+    @Test
+    public void btcdkLib_init_update_remove_config() {
+
+        Optional<InitResult> inited = btcDkService.initConfig(workDir, Network.Regtest, PASSPHRASE, PD_PASSPHRASE_1);
+        assertNotNull(inited);
+        assertTrue(inited.isPresent());
+        InitResult initResult = inited.get();
+        assertEquals(initResult.getMnemonicWords().length, 12);
+        assertNotNull(initResult.getDepositAddress());
+        Optional<Config> updated = btcDkService.updateConfig(workDir, Network.Regtest,
+                new String[]{"127.0.0.1:18333", "10.0.0.10:18333"}, 3, true);
+        assertNotNull(updated);
+        assertTrue(updated.isPresent());
+        Config config2 = updated.get();
+        assertEquals(config2.getNetwork(), Network.Regtest);
+        assertEquals(config2.getBitcoinPeers().length, 2);
+        assertEquals(config2.getBitcoinPeers()[0], "127.0.0.1:18333");
+        assertEquals(config2.getBitcoinPeers()[1], "10.0.0.10:18333");
+        assertEquals(config2.getBitcoinConnections(), 3);
+        assertTrue(config2.isBitcoinDiscovery());
         Optional<Config> removed = btcDkService.removeConfig(workDir, Network.Regtest);
         assertNotNull(removed);
         assertTrue(removed.isPresent());

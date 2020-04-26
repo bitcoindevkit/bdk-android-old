@@ -18,7 +18,8 @@ class BtcDkLib {
 
     native Optional<Config> removeConfig(String workDir, int network);
 
-    native Optional<Config> updateConfig(String workDir, int network, String[] bitcoinPeers, int bitcoinConnections, boolean bitcoinDiscovery);
+    native Optional<Config> updateConfig(String workDir, int network, String[] bitcoinPeers,
+                                         int bitcoinConnections, boolean bitcoinDiscovery);
 
     native Optional<InitResult> initConfig(String workDir, int network, String passphrase, String pdPassphrase);
 

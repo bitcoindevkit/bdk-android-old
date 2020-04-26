@@ -1,6 +1,8 @@
 package org.btcdk.jni;
 
+import java.net.InetAddress;
 import java.nio.file.Path;
+import java.util.List;
 import java.util.Optional;
 
 public class BtcDkService {
@@ -15,7 +17,8 @@ public class BtcDkService {
         btcDkLib = new BtcDkLib();
     }
 
-    public Optional<InitResult> initConfig(Path workDir, Network network, String passphrase, String pdPassphrase) {
+    public Optional<InitResult> initConfig(Path workDir, Network network, String passphrase,
+                                           String pdPassphrase) {
 
         return btcDkLib.initConfig(workDir.toString(), network.ordinal(), passphrase, pdPassphrase);
     }
@@ -27,6 +30,12 @@ public class BtcDkService {
 
     public Optional<Config> removeConfig(Path workDir, Network network) {
         return btcDkLib.removeConfig(workDir.toString(), network.ordinal());
+    }
+
+    public Optional<Config> updateConfig(Path workDir, Network network, String[] bitcoinPeers,
+                                         int bitcoinConnections, boolean bitcoinDiscovery) {
+        return btcDkLib.updateConfig(workDir.toString(), network.ordinal(), bitcoinPeers,
+                bitcoinConnections, bitcoinDiscovery);
     }
 
 //    public void start(Path workDir, Network network, boolean rescan) {
