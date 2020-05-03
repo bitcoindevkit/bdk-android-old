@@ -1,8 +1,6 @@
 package org.btcdk.jni;
 
-import java.net.InetAddress;
 import java.nio.file.Path;
-import java.util.List;
 import java.util.Optional;
 
 public class BtcDkService {
@@ -38,7 +36,15 @@ public class BtcDkService {
                 bitcoinConnections, bitcoinDiscovery);
     }
 
-//    public void start(Path workDir, Network network, boolean rescan) {
-//        BTCDKLib.start(workDir.toString(), network.ordinal(), rescan);
-//    }
+    public void start(Path workDir, Network network, boolean rescan) {
+        btcDkLib.start(workDir.toString(), network.ordinal(), rescan);
+    }
+
+    public void stop() {
+        btcDkLib.stop();
+    }
+
+    public BalanceAmt balance() {
+        return btcDkLib.balance();
+    }
 }

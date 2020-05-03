@@ -23,5 +23,9 @@ class BtcDkLib {
 
     native Optional<InitResult> initConfig(String workDir, int network, String passphrase, String pdPassphrase);
 
-    //native void start(String workDir, int network, boolean rescan);
+    native void start(String workDir, int network, boolean rescan);
+
+    native void stop();
+
+    native BalanceAmt balance();
 }

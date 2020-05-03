@@ -1,15 +1,17 @@
 package org.btcdk.jni;
 
+import org.apache.commons.io.FileUtils;
 import org.junit.After;
 import org.junit.Test;
 
+import java.io.File;
+import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
@@ -33,10 +35,21 @@ public class BtcDkServiceTest {
 
     private final BtcDkService btcDkService;
 
-    private final Path workDir = Paths.get(".").toAbsolutePath();
+    private final Path workDir = Paths.get("../data").toAbsolutePath();
+
+    private final Network network = Network.Regtest;
 
     public BtcDkServiceTest() {
         btcDkService = new BtcDkService();
+    }
+
+    @After
+    public void deleteData() throws IOException {
+        File dataDir = Paths.get(workDir.toString(), network.toString()).toFile();
+        if (dataDir.exists()) {
+            System.out.println("dataDir exists, deleting!");
+            FileUtils.deleteDirectory(dataDir);
+        }
     }
 
     @Test
@@ -83,11 +96,41 @@ public class BtcDkServiceTest {
         assertTrue(removed.isPresent());
     }
 
-//    @Test
-//    public void btcdkLib_start() {
-//
-//        BTCDKService.start(workDir, Network.Regtest, false);
-//        System.out.println("Started!");
-//    }
+    @Test
+    public void btcdkLib_config_start_balance() {
+
+        Optional<InitResult> inited = btcDkService.initConfig(workDir, Network.Regtest, PASSPHRASE, PD_PASSPHRASE_1);
+        assertNotNull(inited);
+        assertTrue(inited.isPresent());
+        InitResult initResult = inited.get();
+        assertEquals(initResult.getMnemonicWords().length, 12);
+        assertNotNull(initResult.getDepositAddress());
+        System.out.println("Deposit address: " + initResult.getDepositAddress());
+        Optional<Config> updated = btcDkService.updateConfig(workDir, Network.Regtest,
+                new String[]{"127.0.0.1:9333", "10.0.0.10:19333"}, 2, false);
+        assertNotNull(updated);
+        assertTrue(updated.isPresent());
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(1000);
+                    BalanceAmt balanceAmt = btcDkService.balance();
+                    System.out.println("balance: " + balanceAmt.getBalance() + " confirmed: " + balanceAmt.getConfirmed());
+                    System.out.println("Stopping!");
+                    btcDkService.stop();
+                } catch (InterruptedException e) {
+                    System.out.println("Thread interrupted.");
+                }
+            }
+        });
+        t.start();
+        System.out.println("Starting!");
+        btcDkService.start(workDir, Network.Regtest, false);
+        System.out.println("Stopped!");
+        Optional<Config> removed = btcDkService.removeConfig(workDir, Network.Regtest);
+        assertNotNull(removed);
+        assertTrue(removed.isPresent());
+    }
 
 }
