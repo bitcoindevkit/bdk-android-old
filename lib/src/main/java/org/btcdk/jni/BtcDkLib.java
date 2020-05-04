@@ -28,4 +28,6 @@ class BtcDkLib {
     native void stop();
 
     native BalanceAmt balance();
+
+    native Address depositAddress();
 }
