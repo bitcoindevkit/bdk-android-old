@@ -105,7 +105,7 @@ public class BtcDkApiTest {
         InitResult initResult = inited.get();
         assertEquals(initResult.getMnemonicWords().length, 12);
         assertNotNull(initResult.getDepositAddress());
-        System.out.println("Deposit address: " + initResult.getDepositAddress());
+        System.out.println("Deposit address: " + initResult.getDepositAddress().getAddress());
         Optional<Config> updated = btcDkApi.updateConfig(workDir, Network.Regtest,
                 new String[]{"127.0.0.1:9333", "10.0.0.10:19333"}, 2, false);
         assertNotNull(updated);

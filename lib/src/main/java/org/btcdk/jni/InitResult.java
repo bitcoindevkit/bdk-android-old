@@ -10,9 +10,9 @@ public class InitResult {
 
     private final String[] mnemonicWords;
 
-    private final String depositAddress;
+    private final Address depositAddress;
 
-    public InitResult(String mnemonicWords, String depositAddress) {
+    public InitResult(String mnemonicWords, Address depositAddress) {
         this.mnemonicWords = mnemonicWords != null ? mnemonicWords.split(" ") : null;
         this.depositAddress = depositAddress;
     }
@@ -21,7 +21,7 @@ public class InitResult {
         return mnemonicWords;
     }
 
-    public String getDepositAddress() {
+    public Address getDepositAddress() {
         return depositAddress;
     }
 }
