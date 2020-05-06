@@ -51,4 +51,8 @@ public class BtcDkApi {
     public Address depositAddress() {
         return btcDkLib.depositAddress();
     }
+
+    public WithdrawTx withdraw(String passphrase, String address, long feePerVByte, long amount) {
+        return btcDkLib.withdraw(passphrase, address, feePerVByte, amount);
+    }
 }

@@ -2,6 +2,7 @@ package org.btcdk.jni;
 
 import org.apache.commons.io.FileUtils;
 import org.junit.After;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.File;
@@ -134,6 +135,54 @@ public class BtcDkApiTest {
         Optional<Config> removed = btcDkApi.removeConfig(workDir, Network.Regtest);
         assertNotNull(removed);
         assertTrue(removed.isPresent());
+    }
+
+    @Ignore
+    @Test
+    public void btcdkLib_config_start_withdraw() {
+
+        Optional<Config> removed = btcDkApi.removeConfig(workDir, Network.Regtest);
+        assertNotNull(removed);
+        assertTrue(removed.isPresent());
+
+        Optional<InitResult> inited = btcDkApi.initConfig(workDir, Network.Regtest, PASSPHRASE, PD_PASSPHRASE_1);
+        assertNotNull(inited);
+        assertTrue(inited.isPresent());
+        InitResult initResult = inited.get();
+        assertEquals(initResult.getMnemonicWords().length, 12);
+        assertNotNull(initResult.getDepositAddress());
+        System.out.println("Deposit address: " + initResult.getDepositAddress().getAddress());
+        Optional<Config> updated = btcDkApi.updateConfig(workDir, Network.Regtest,
+                new String[]{"127.0.0.1:9333", "10.0.0.10:19333"}, 2, false);
+        assertNotNull(updated);
+        assertTrue(updated.isPresent());
+
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(1000);
+                    BalanceAmt balanceAmt = btcDkApi.balance();
+                    System.out.println("balance: " + balanceAmt.getBalance() + " confirmed: " + balanceAmt.getConfirmed());
+                    Address depositAddress = btcDkApi.depositAddress();
+                    System.out.println("deposit address: " + depositAddress.getAddress() + ", network: " + depositAddress.getNetwork().toString() + ", type: " + depositAddress.getType().orElse("unknown"));
+                    WithdrawTx withdrawTx = btcDkApi.withdraw(PASSPHRASE, "bcrt1qxsnkq3xu7j3kl6cukev6ysg54arvqujtuetln5", 1, 1000000);
+                    System.out.println("withdraw txid: " + withdrawTx.getTxid() + ", fee: " + withdrawTx.getFee());
+                    Thread.sleep(2000);
+                    System.out.println("Stopping!");
+                    btcDkApi.stop();
+                } catch (InterruptedException e) {
+                    System.out.println("Thread interrupted.");
+                }
+            }
+        });
+        t.start();
+        System.out.println("Starting!");
+        btcDkApi.start(workDir, Network.Regtest, false);
+        System.out.println("Stopped!");
+//        Optional<Config> removed = btcDkApi.removeConfig(workDir, Network.Regtest);
+//        assertNotNull(removed);
+//        assertTrue(removed.isPresent());
     }
 
 }

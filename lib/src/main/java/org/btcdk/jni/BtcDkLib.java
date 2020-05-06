@@ -30,4 +30,6 @@ class BtcDkLib {
     native BalanceAmt balance();
 
     native Address depositAddress();
+
+    native WithdrawTx withdraw(String passphrase, String address, long feePerVByte, long amount);
 }
