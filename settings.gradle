@@ -1,2 +1,2 @@
 include ':lib'
-rootProject.name='BTCDK AAR'
+rootProject.name='bdk-android'

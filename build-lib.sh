@@ -1,3 +1,3 @@
 #!/bin/bash
-cd ../btcdk
+cd ../bdk
 ./build-lib.sh

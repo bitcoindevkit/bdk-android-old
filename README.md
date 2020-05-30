@@ -1,18 +1,18 @@
-BTCDK Android AAR
-=================
+BDK Android AAR
+===============
 
-This project wraps the [btcdk](https://github.com/btcdk/btcdk) library in to an android aar library to be used
+This project wraps the [bdk](https://github.com/bitcoindevkit/bdk) library in to an android aar library to be used
 in an Android app.
 
-## Build and Install btcdk libraries
+## Build and Install bdk libraries
 
-1. Clone btcdk project (if not already cloned) and follow README instructions
+1. Clone bdk project (if not already cloned) and follow README instructions
    in that project to setup environment.
    
    ```
    cd ..
-   git clone https://github/btcdk/btcdk
-   cd btcdk
+   git clone https://github/bitcoindevkit/bdk
+   cd bdk
    more README.md
    ```
 

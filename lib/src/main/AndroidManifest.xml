@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="org.btcdk.jni">
+    package="org.bdk.jni">
 
     <application
         android:label="@string/app_name">

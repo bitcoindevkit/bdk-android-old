@@ -22,7 +22,7 @@ allprojects {
 
     apply plugin: 'maven'
 
-    group = 'org.btcdk'
+    group = 'org.bdk'
     version = '0.1.0'
 
     uploadArchives {
