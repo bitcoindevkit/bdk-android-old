@@ -31,6 +31,10 @@ public class BdkApi {
         bdkLib = new BdkLib();
     }
 
+    public void initLogger() {
+        bdkLib.initLogger();
+    }
+
     public Optional<InitResult> initConfig(Path workDir, Network network, String passphrase,
                                            String pdPassphrase) {
 
@@ -60,7 +64,7 @@ public class BdkApi {
         bdkLib.stop();
     }
 
-    public BalanceAmt balance() {
+    public Optional<BalanceAmt> balance() {
         return bdkLib.balance();
     }
 

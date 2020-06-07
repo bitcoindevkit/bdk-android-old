@@ -30,6 +30,8 @@ class BdkLib {
      * which is packaged with this application.
      */
 
+    native void initLogger();
+
     native Optional<Config> loadConfig(String workDir, int network);
 
     native Optional<Config> removeConfig(String workDir, int network);
@@ -43,7 +45,7 @@ class BdkLib {
 
     native void stop();
 
-    native BalanceAmt balance();
+    native Optional<BalanceAmt> balance();
 
     native Address depositAddress();
 

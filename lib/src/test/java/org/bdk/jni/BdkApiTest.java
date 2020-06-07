@@ -132,8 +132,8 @@ public class BdkApiTest {
             public void run() {
                 try {
                     Thread.sleep(1000);
-                    BalanceAmt balanceAmt = bdkApi.balance();
-                    System.out.println("balance: " + balanceAmt.getBalance() + " confirmed: " + balanceAmt.getConfirmed());
+                    Optional<BalanceAmt> balanceAmt = bdkApi.balance();
+                    balanceAmt.ifPresent(amt -> System.out.println("balance: " + amt.getBalance() + " confirmed: " + amt.getConfirmed()));
                     Address depositAddress = bdkApi.depositAddress();
                     System.out.println("deposit address: " + depositAddress.getAddress() + ", network: " + depositAddress.getNetwork().toString() + ", type: " + depositAddress.getType().orElse("unknown"));
 
@@ -178,8 +178,8 @@ public class BdkApiTest {
             public void run() {
                 try {
                     Thread.sleep(1000);
-                    BalanceAmt balanceAmt = bdkApi.balance();
-                    System.out.println("balance: " + balanceAmt.getBalance() + " confirmed: " + balanceAmt.getConfirmed());
+                    Optional<BalanceAmt> balanceAmt = bdkApi.balance();
+                    balanceAmt.ifPresent(amt -> System.out.println("balance: " + amt.getBalance() + " confirmed: " + amt.getConfirmed()));
                     Address depositAddress = bdkApi.depositAddress();
                     System.out.println("deposit address: " + depositAddress.getAddress() + ", network: " + depositAddress.getNetwork().toString() + ", type: " + depositAddress.getType().orElse("unknown"));
                     WithdrawTx withdrawTx = bdkApi.withdraw(PASSPHRASE, "bcrt1qxsnkq3xu7j3kl6cukev6ysg54arvqujtuetln5", 1, 1000000);
