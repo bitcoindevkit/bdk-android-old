@@ -16,20 +16,6 @@
 
 package org.bdk.jni;
 
-
-/**
-     pub struct Config {
-     pub work_dir: String,
-     pub encryptedwalletkey: String,
-     pub keyroot: String,
-     pub lookahead: u32,
-     pub birth: u64,
-     pub network: Network,
-     pub bitcoin_peers: Vec<SocketAddr>,
-     pub bitcoin_connections: usize,
-     pub bitcoin_discovery: bool,
-    }
- **/
 public class Config {
 
     private Network network;
