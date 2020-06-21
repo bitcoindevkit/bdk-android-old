@@ -23,9 +23,20 @@ in an Android app.
    ./install-lib.sh
    ```
    
+1. Before running tests set library path
+
+   osx
+   ```
+   export JAVA_LIBRARY_PATH=[project_home]/lib/src/test/jniLibs/x86_64
+   ```
+   
+   linux
+   ```
+   export LD_LIBRARY_PATH=[project_home]/lib/src/test/jniLibs/x86_64
+   ```      
+   
 1. Deploy AAR to local maven repository
    
    ```
-   export JAVA_LIBRARY_PATH=[project_home]/lib/src/main/jniLibs/x86_64
-   gradle clean build uploadArchives
+   ./gradlew clean build uploadArchives
    ```

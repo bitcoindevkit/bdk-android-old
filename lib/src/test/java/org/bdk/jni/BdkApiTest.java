@@ -57,6 +57,7 @@ public class BdkApiTest {
     private final Network network = Network.Regtest;
 
     public BdkApiTest() {
+        System.out.println("java.library.path = " + System.getProperty("java.library.path"));
         bdkApi = new BdkApi();
     }
 
